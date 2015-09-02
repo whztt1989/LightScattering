@@ -191,3 +191,18 @@ void COutdoorLightScattering::__computeMieScatteringCoefficennts()
 
 	m_AirScatteringAttribs.m_TotalExtinctionCoeff = m_AirScatteringAttribs.m_RayleighExtinctionCoeff + m_AirScatteringAttribs.m_MieExtinctionCoeff;
 }
+
+//******************************************************************
+//FUNCTION:
+void COutdoorLightScattering::__applyPhaseFunction(vec3f& voRayleighScattering, vec3f& voMieScattering, float vCosTheta)
+{
+	vec4f AngularRayleighScatteringCoeff = m_AirScatteringAttribs.m_AngularRayleighScatteringCoeff * (1 + vCosTheta * vCosTheta);
+	voRayleighScattering.dot(vec3f(AngularRayleighScatteringCoeff[0], AngularRayleighScatteringCoeff[1], AngularRayleighScatteringCoeff[2]));
+	
+	vec2f Temp = vec2f(m_AirScatteringAttribs.m_CornetteShanks[1], m_AirScatteringAttribs.m_CornetteShanks[2]);
+	float Denom = 1 / sqrt(Temp.dot(vec2f(1.0, vCosTheta)));  // 1 / (1 + g^2 - 2g*cos(theta))^(1/2)
+	float CornettePhaseFunc = m_AirScatteringAttribs.m_CornetteShanks[0] * (Denom * Denom * Denom) * (1+ vCosTheta * vCosTheta);
+
+	vec4f AngularMieScatteringCoeff = m_AirScatteringAttribs.m_AngularMieScatteringCoeff * CornettePhaseFunc;
+	voMieScattering.dot(vec3f(AngularMieScatteringCoeff[0], AngularMieScatteringCoeff[1], AngularMieScatteringCoeff[2]));
+ }

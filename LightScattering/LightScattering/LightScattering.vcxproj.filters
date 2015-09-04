@@ -47,5 +47,8 @@
     <ClInclude Include="LightScatteringPostProcess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LightScatteringExport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -53,9 +53,9 @@ void COutdoorLightScattering::__getRaySphereIntersection(vec3f vRayOrigin, vec3f
 //FUNCTION:
 void COutdoorLightScattering::__getAtmosphereProperties(vec3f vPosition, vec3f vEarthCentre, vec3f vDirectionOnLight, vec2f& voParticleDensity, vec2f& voNetParticleDensityToAtmTop)
 {
-	vec3f EarthCenreToPointDir = vPosition - vEarthCentre;
-	float DistToEarthCentre = sqrt(EarthCenreToPointDir.dot(EarthCenreToPointDir));
-	EarthCenreToPointDir /= DistToEarthCentre;
+	vec3f EarthCentreToPointDir = vPosition - vEarthCentre;
+	float DistToEarthCentre = sqrt(EarthCentreToPointDir.dot(EarthCentreToPointDir));
+	EarthCentreToPointDir /= DistToEarthCentre;
 
 	float HeightAboveSurface = DistToEarthCentre - EARTH_RADIUS;
 	float ParticleDensityR = exp( -HeightAboveSurface / PARTICLE_SCALE_HEIGHT_R);
@@ -63,7 +63,7 @@ void COutdoorLightScattering::__getAtmosphereProperties(vec3f vPosition, vec3f v
 	voParticleDensity[0] = ParticleDensityR;
 	voParticleDensity[1] = ParticleDensityM;
 
-	float CosSunZenithAngleForCurrPoint = __computeCosBetha(EarthCenreToPointDir, -vDirectionOnLight);
+	float CosSunZenithAngleForCurrPoint = __computeCosBetha(EarthCentreToPointDir, -vDirectionOnLight);
 	voNetParticleDensityToAtmTop = __getNetParticleDensity(HeightAboveSurface, CosSunZenithAngleForCurrPoint, true);
 }
 
@@ -74,11 +74,10 @@ void COutdoorLightScattering::computeScatteringCoefficients()
 	__computeRayleighScatteringCoefficennts();
 	__computeMieScatteringCoefficennts();
 
-
 	float g = m_AirScatteringAttribs.m_AerosolPhaseFuncG;
 	m_AirScatteringAttribs.m_CornetteShanks[0] = 3*(1.0f - g*g) / ( 2*(2.0f + g*g) );
 	m_AirScatteringAttribs.m_CornetteShanks[1] = 1.0f + g*g;
-	m_AirScatteringAttribs.m_CornetteShanks[2] = -2.0f*g;
+	m_AirScatteringAttribs.m_CornetteShanks[2] = -2.0f * g;
 	m_AirScatteringAttribs.m_CornetteShanks[3] = 1.0f;
 
 	m_AirScatteringAttribs.m_TotalExtinctionCoeff = m_AirScatteringAttribs.m_RayleighExtinctionCoeff + m_AirScatteringAttribs.m_MieExtinctionCoeff;
@@ -172,7 +171,7 @@ void COutdoorLightScattering::__computePointDiffInscattering(vec2f vPraticleDens
 	vec3f TotalRlghOpticalDepth =  RayleighExtinctionCoeffRGB * TotalParticleDensity[0];
 
 	vec3f MieExtinctionCoeffRGB = vec3f( m_AirScatteringAttribs.m_MieExtinctionCoeff[0],  m_AirScatteringAttribs.m_MieExtinctionCoeff[1],  m_AirScatteringAttribs.m_MieExtinctionCoeff[2]);
-	vec3f TotalMieOpticalDepth =  MieExtinctionCoeffRGB * TotalParticleDensity[0];
+	vec3f TotalMieOpticalDepth =  MieExtinctionCoeffRGB * TotalParticleDensity[1];
 
 	//Total extinction for the current integration point
 	vec3f TotalExtinction;
@@ -203,6 +202,9 @@ void COutdoorLightScattering::computeInscatteringIntegral(vec3f vRayStart, vec3f
 		voNetParticleFromCam += ParticleDensity * StepLen;
 
 		vec3f RlghInsctr, MieInsctr;
+		RlghInsctr[0] = RlghInsctr[1] = RlghInsctr[2] = 0.0;
+		MieInsctr[0] = MieInsctr[1] = MieInsctr[2] = 0.0;
+
 		__computePointDiffInscattering(ParticleDensity, voNetParticleFromCam, NetParticleDensityToAtmTop, RlghInsctr, MieInsctr);
 
 		voRayleighInscattering += RlghInsctr * StepLen;
@@ -226,6 +228,9 @@ void COutdoorLightScattering::__applyPhaseFunction(vec3f& voRayleighScattering, 
 	voRayleighScattering[1] *= AngularRayleighScatteringCoeff[1];
 	voRayleighScattering[2] *= AngularRayleighScatteringCoeff[2];
 
+	// Apply Cornette-Shanks phase function (see Nishita et al. 93):
+	// F(theta) = 1/(4*PI) * 3*(1-g^2) / (2*(2+g^2)) * (1+cos^2(theta)) / (1 + g^2 - 2g*cos(theta))^(3/2)
+	// m_CornetteShanks = ( 3*(1-g^2) / (2*(2+g^2)), 1+g^2, -2g, 1 )
 	vec2f Temp = vec2f(m_AirScatteringAttribs.m_CornetteShanks[1], m_AirScatteringAttribs.m_CornetteShanks[2]);
 	float Denom = 1 / sqrt(Temp.dot(vec2f(1.0, vCosTheta)));  // 1 / (1 + g^2 - 2g*cos(theta))^(1/2)
 	float CornettePhaseFunc = m_AirScatteringAttribs.m_CornetteShanks[0] * (Denom * Denom * Denom) * (1+ vCosTheta * vCosTheta);

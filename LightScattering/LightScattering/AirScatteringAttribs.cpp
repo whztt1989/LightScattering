@@ -2,7 +2,7 @@
 
 CAirScatteringAttribs::CAirScatteringAttribs()
 {
-	m_AerosolPhaseFuncG = 0.76;
+	m_AerosolPhaseFuncG = (float)0.76;
 }
 
 CAirScatteringAttribs::~CAirScatteringAttribs()

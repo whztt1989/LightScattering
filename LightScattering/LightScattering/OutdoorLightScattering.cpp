@@ -58,12 +58,12 @@ void COutdoorLightScattering::__getAtmosphereProperties(vec3f vPosition, vec3f v
 	EarthCentreToPointDir /= DistToEarthCentre;
 
 	float HeightAboveSurface = DistToEarthCentre - EARTH_RADIUS;
-	float ParticleDensityR = exp( -HeightAboveSurface / PARTICLE_SCALE_HEIGHT_R);
-	float ParticleDensityM = exp( -HeightAboveSurface / PARTICLE_SCALE_HEIGHT_M);
+	float ParticleDensityR = (float)exp( -HeightAboveSurface / PARTICLE_SCALE_HEIGHT_R);
+	float ParticleDensityM = (float)exp( -HeightAboveSurface / PARTICLE_SCALE_HEIGHT_M);
 	voParticleDensity[0] = ParticleDensityR;
 	voParticleDensity[1] = ParticleDensityM;
 
-	float CosSunZenithAngleForCurrPoint = __computeCosBetha(EarthCentreToPointDir, vDirectionOnLight);
+	float CosSunZenithAngleForCurrPoint = __computeCosBetha(EarthCentreToPointDir, -vDirectionOnLight);
 	voNetParticleDensityToAtmTop = __getNetParticleDensity(HeightAboveSurface, CosSunZenithAngleForCurrPoint, true);
 }
 
@@ -179,18 +179,20 @@ void COutdoorLightScattering::__computePointDiffInscattering(vec2f vPraticleDens
 	TotalExtinction[1] = exp(-(TotalRlghOpticalDepth[1] + TotalMieOpticalDepth[1]));
 	TotalExtinction[2] = exp(-(TotalRlghOpticalDepth[2] + TotalMieOpticalDepth[2]));
 
-	m_TotalExtinctionTest = TotalExtinction;
-
 	voRlghInscatering = vPraticleDensityIncurrPoint[0] * TotalExtinction;
 	voMieInscatering = vPraticleDensityIncurrPoint[1] * TotalExtinction;
 }
 
-void COutdoorLightScattering::computeInscatteringIntegral(vec3f vRayStart, vec3f vRayEnd, vec3f vEarthCentre, vec3f vDirOnLight, vec2f& voNetParticleFromCam, vec3f& voRayleighInscattering, vec3f& voMieInscattering, const float vNumSteps)
+void COutdoorLightScattering::computeInscatteringIntegral(vec3f vRayStart, vec3f vRayEnd, vec3f vEarthCentre, vec3f vDirOnLight, vec2f& voNetParticleFromCam, vec3f& voRayleighInscattering, vec3f& voMieInscattering, const float vNumSteps /*= 7*/)
 {
+	voNetParticleFromCam[0] = voNetParticleFromCam[1] = 0.0;
+	voRayleighInscattering[0] = voRayleighInscattering[1] = voRayleighInscattering[2] = 0.0;
+	voMieInscattering[0] = voMieInscattering[1] = voMieInscattering[2] = 0.0;
+	normalizeVector(vDirOnLight);
+
 	computeScatteringCoefficients();
 	vec3f Steps = (vRayEnd - vRayStart) / vNumSteps;
 	float StepLen = sqrt(Steps[0]*Steps[0] + Steps[1]*Steps[1] + Steps[2]*Steps[2]);
-	voNetParticleFromCam[0] = voNetParticleFromCam[1] = 0.0;
 
 	for (float StepNum = 0.5; StepNum < vNumSteps; StepNum += 1.0)
 	{
@@ -200,7 +202,6 @@ void COutdoorLightScattering::computeInscatteringIntegral(vec3f vRayStart, vec3f
 		__getAtmosphereProperties(CurrPos, vEarthCentre, vDirOnLight, ParticleDensity, NetParticleDensityToAtmTop);
 
 		NetParticleDensityToAtmTop = __IntegrateParticleDensityAlongRay(CurrPos, vDirOnLight, vEarthCentre);
-
 		voNetParticleFromCam += ParticleDensity * StepLen;
 
 		vec3f RlghInsctr, MieInsctr;
@@ -212,12 +213,10 @@ void COutdoorLightScattering::computeInscatteringIntegral(vec3f vRayStart, vec3f
 		voMieInscattering += MieInsctr * StepLen;
 	}
 
-	float CosBetha = __computeCosBetha(vRayStart - vRayEnd, -vDirOnLight);
+	float CosBetha = __computeCosBetha(vRayStart - vRayEnd, vDirOnLight);
 	__applyPhaseFunction(voRayleighInscattering, voMieInscattering, CosBetha);
 
 	vec3f LightInScattering = voRayleighInscattering + voMieInscattering;
-	vec3f Test = LightInScattering + m_TotalExtinctionTest;
-	float value = sqrt(Test.dot(Test));
 }
 
 //******************************************************************
@@ -274,13 +273,13 @@ vec3f COutdoorLightScattering::__Normalize3v(vec3f vVector)
 vec2f COutdoorLightScattering::__IntegrateParticleDensityAlongRay(vec3f vPos, vec3f vRayDir, vec3f vEarthCentre)
 {
 	vec2f RayAtmTopIsecs;
-	__getRaySphereIntersection(vPos, vRayDir, vEarthCentre, ATM_TOP_RADIUS, RayAtmTopIsecs);
+	__getRaySphereIntersection(vPos, -vRayDir, vEarthCentre, ATM_TOP_RADIUS, RayAtmTopIsecs);
 	
 	float IntegrationDist = 0.0;
 	if (RayAtmTopIsecs[1] > 0.0)
 	  IntegrationDist = RayAtmTopIsecs[1];
 
-	vec3f RayEnd = vPos + vRayDir * IntegrationDist;
+	vec3f RayEnd = vPos + (-vRayDir) * IntegrationDist;
 
 	return __IntegrateParticleDensity(vPos, RayEnd, vEarthCentre);
 }

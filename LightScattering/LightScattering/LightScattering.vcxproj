@@ -52,8 +52,9 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;LightScattering_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(EIGEN);</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -80,12 +81,12 @@
   <ItemGroup>
     <ClCompile Include="AirScatteringAttribs.cpp" />
     <ClCompile Include="LightScatteringPostProcess.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="OutdoorLightScattering.cpp" />
     <ClCompile Include="PostProcessingAttribs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AirScatteringAttribs.h" />
+    <ClInclude Include="CommonMath.h" />
     <ClInclude Include="LightScatteringExport.h" />
     <ClInclude Include="LightScatteringPostProcess.h" />
     <ClInclude Include="OutdoorLightScattering.h" />

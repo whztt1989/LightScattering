@@ -5,7 +5,6 @@
 
 COutdoorLightScattering OutdoorLightScattering;
 vec3f EarthCentre(0.0, 0.0, 0.0);
-
 vec3f RayStart[2], RayEnd[2];
 vec3f LightDir = vec3f(-1.0, -1.0, 0.0);
 
@@ -20,13 +19,13 @@ void setPostion(float vX, float vY, float vZ, vec3f& vPoint)
 
 //******************************************************************
 //FUNCTION:
-void testSameCameraDirection()
+void testSameHeight()
 {
 	setPostion(0.0, 6360000, 0.0, RayStart[0]);
 	setPostion(0.0, 6370000, 0.0, RayEnd[0]);
 
-	setPostion(0.0, 6360000, 0.0, RayStart[1]);
-	setPostion(0.0, 6371000, 0.0, RayEnd[1]);
+	setPostion(6360000, 0.0, 0.0, RayStart[1]);
+	setPostion(6370000, 0.0, 0.0, RayEnd[1]);
 
 	vec2f NetParticleFromCam[2];
 	vec3f RayleighInsc[2];
@@ -39,15 +38,14 @@ void testSameCameraDirection()
 	OutdoorLightScattering.computeInscatteringIntegral(RayStart[1], RayEnd[1], EarthCentre, LightDir, NetParticleFromCam[1], RayleighInsc[1], MieInsc[1], 7);
 	InscatteringIntegralResult[1] = RayleighInsc[1] + MieInsc[1];
 
-	if (InscatteringIntegralResult[0][0] < InscatteringIntegralResult[1][0] && InscatteringIntegralResult[0][1] < InscatteringIntegralResult[1][1] && InscatteringIntegralResult[0][2] < InscatteringIntegralResult[1][2])
-		std::cout << "Compute same camera direction...Test passed" << std::endl;
+	if (InscatteringIntegralResult[0][0] == InscatteringIntegralResult[1][0] && InscatteringIntegralResult[0][1] == InscatteringIntegralResult[1][1] && InscatteringIntegralResult[0][2] == InscatteringIntegralResult[1][2])
+		std::cout << "Compute same height sample(North, East)...Test passed" << std::endl;
 	else
-		std::cout << "Compute same camera direction...Test not passed" << std::endl;
+		std::cout << "Compute same height sample(North, East)...Test not passed" << std::endl;
 }
-
 int main()
 {
-	testSameCameraDirection();
+	testSameHeight();
 	system("pause");
 	return 1;
 }

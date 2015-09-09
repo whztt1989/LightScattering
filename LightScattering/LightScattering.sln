@@ -5,6 +5,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LightScattering", "LightSca
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScatteringTestCase-01", "ScatteringTestCase-01\ScatteringTestCase-01.vcxproj", "{2F7C6521-ADB5-4DD0-86C1-26ED0DC6409F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScatteringTestCase-02", "ScatteringTestCase-02\ScatteringTestCase-02.vcxproj", "{E5ECEDC8-1737-4EF6-B3A3-0F12CEA77B3C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScatteringTestCase-03", "ScatteringTestCase-03\ScatteringTestCase-03.vcxproj", "{DEC21EEC-C88F-46B6-A7A0-63DD0937179B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScatteringTestCase-04", "ScatteringTestCase-04\ScatteringTestCase-04.vcxproj", "{31C013C9-5DAD-49A3-9000-2BF6746EBA81}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +25,18 @@ Global
 		{2F7C6521-ADB5-4DD0-86C1-26ED0DC6409F}.Debug|Win32.Build.0 = Debug|Win32
 		{2F7C6521-ADB5-4DD0-86C1-26ED0DC6409F}.Release|Win32.ActiveCfg = Release|Win32
 		{2F7C6521-ADB5-4DD0-86C1-26ED0DC6409F}.Release|Win32.Build.0 = Release|Win32
+		{E5ECEDC8-1737-4EF6-B3A3-0F12CEA77B3C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E5ECEDC8-1737-4EF6-B3A3-0F12CEA77B3C}.Debug|Win32.Build.0 = Debug|Win32
+		{E5ECEDC8-1737-4EF6-B3A3-0F12CEA77B3C}.Release|Win32.ActiveCfg = Release|Win32
+		{E5ECEDC8-1737-4EF6-B3A3-0F12CEA77B3C}.Release|Win32.Build.0 = Release|Win32
+		{DEC21EEC-C88F-46B6-A7A0-63DD0937179B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DEC21EEC-C88F-46B6-A7A0-63DD0937179B}.Debug|Win32.Build.0 = Debug|Win32
+		{DEC21EEC-C88F-46B6-A7A0-63DD0937179B}.Release|Win32.ActiveCfg = Release|Win32
+		{DEC21EEC-C88F-46B6-A7A0-63DD0937179B}.Release|Win32.Build.0 = Release|Win32
+		{31C013C9-5DAD-49A3-9000-2BF6746EBA81}.Debug|Win32.ActiveCfg = Debug|Win32
+		{31C013C9-5DAD-49A3-9000-2BF6746EBA81}.Debug|Win32.Build.0 = Debug|Win32
+		{31C013C9-5DAD-49A3-9000-2BF6746EBA81}.Release|Win32.ActiveCfg = Release|Win32
+		{31C013C9-5DAD-49A3-9000-2BF6746EBA81}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

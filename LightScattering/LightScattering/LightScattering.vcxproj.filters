@@ -13,42 +13,71 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{bb407f20-8315-460c-9716-6b472a722b4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="OutdoorLightScattering.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AirScatteringAttribs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PostProcessingAttribs.cpp">
+    <ClCompile Include="CameraAttribs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LightScatteringPostProcess.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OutdoorLightScattering.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PostProcessingAttribs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UBO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="OutdoorLightScattering.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Struct.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AirScatteringAttribs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PostProcessingAttribs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LightScatteringPostProcess.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LightScatteringExport.h">
+    <ClInclude Include="CameraAttribs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CommonMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LightScatteringPostProcess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OutdoorLightScattering.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PostProcessingAttribs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Struct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UBO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="0fragOutdoorlightScattering.glsl">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="0vertOutdoorlightScattering.glsl">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

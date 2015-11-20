@@ -11,13 +11,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8F4764A3-E4B9-4603-9998-2FFDD252ADB3}</ProjectGuid>
+    <ProjectGuid>{1900C556-9765-4C61-90C7-6F8C19F22C63}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>LightScattering</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -41,7 +41,6 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -52,13 +51,13 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;LightScattering_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(EIGEN);</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(EIGEN);$(OPENGL)/include;$(BOOST);</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(OPENGL)\lib;$(BOOST)\x86;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -80,18 +79,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AirScatteringAttribs.cpp" />
+    <ClCompile Include="CameraAttribs.cpp" />
     <ClCompile Include="LightScatteringPostProcess.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="OutdoorLightScattering.cpp" />
     <ClCompile Include="PostProcessingAttribs.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="UBO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AirScatteringAttribs.h" />
+    <ClInclude Include="CameraAttribs.h" />
     <ClInclude Include="CommonMath.h" />
-    <ClInclude Include="LightScatteringExport.h" />
     <ClInclude Include="LightScatteringPostProcess.h" />
     <ClInclude Include="OutdoorLightScattering.h" />
     <ClInclude Include="PostProcessingAttribs.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="Struct.h" />
+    <ClInclude Include="UBO.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="0fragOutdoorlightScattering.glsl" />
+    <None Include="0vertOutdoorlightScattering.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

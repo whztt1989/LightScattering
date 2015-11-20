@@ -1,5 +1,9 @@
 #pragma once
 #include <iostream>
+#include <string>
+#include <vector>
+#include <gl/glew.h>
+#include <gl/glut.h>
 #include <Eigen/dense>
 
 typedef Eigen::Vector2f vec2f;
@@ -9,6 +13,8 @@ typedef Eigen::Vector4f vec4f;
 typedef Eigen::Vector2d vec2d;
 typedef Eigen::Vector3d vec3d;
 typedef Eigen::Vector4d vec4d;
+
+typedef Eigen::Matrix4f matrix4f;
 
 #define PI 3.14159265358979323846
 
@@ -39,10 +45,3 @@ typedef Eigen::Vector4d vec4d;
 #ifndef IS_32BIT_MIN_MAX_MAP
 #   define IS_32BIT_MIN_MAX_MAP 0
 #endif
-
-struct SPoint
-{
-	float m_X;
-	float m_Y;
-	float m_Z;
-};

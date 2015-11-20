@@ -1,4 +1,5 @@
 #include "OutdoorLightScattering.h"
+#include "CommonMath.h"
 
 COutdoorLightScattering::COutdoorLightScattering()
 {
@@ -163,6 +164,8 @@ void COutdoorLightScattering::__computePointDiffInscattering(vec2f vPraticleDens
 	voMieInscatering = vPraticleDensityIncurrPoint[1] * TotalExtinction;
 }
 
+//******************************************************************
+//FUNCTION:
 void COutdoorLightScattering::computeInscatteringIntegral(vec3f vRayStart, vec3f vRayEnd, vec3f vEarthCentre, vec3f vDirOnLight, vec2f& voNetParticleFromCam, vec3f& voRayleighInscattering, vec3f& voMieInscattering, const float vNumSteps /*= 7*/)
 {
 	voNetParticleFromCam[0] = voNetParticleFromCam[1] = 0.0;
@@ -279,4 +282,29 @@ void COutdoorLightScattering::__computeCurPointHeightAndNormal(vec3f vPos, vec3f
 	
 	voNormal = EarthCentreToPointDir / DistToEarthCentre;
 	voHeight = DistToEarthCentre - EARTH_RADIUS;
+}
+
+//******************************************************************
+//FUNCTION:
+COutdoorLightScattering* COutdoorLightScattering::getInstance()
+{	
+	static COutdoorLightScattering* pOutdoorLightScattering = NULL;
+
+	if (NULL == pOutdoorLightScattering)
+	{
+		boost::mutex Mutex;
+		boost::mutex::scoped_lock Lock(Mutex);
+		if (NULL == pOutdoorLightScattering)
+		{
+			pOutdoorLightScattering = new COutdoorLightScattering;
+		}
+	}
+	return pOutdoorLightScattering;
+}
+
+//******************************************************************
+//FUNCTION:
+const CAirScatteringAttribs COutdoorLightScattering::getAirScatteringAttribs() const
+{
+	return m_AirScatteringAttribs;
 }

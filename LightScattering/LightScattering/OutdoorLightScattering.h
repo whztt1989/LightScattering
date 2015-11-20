@@ -1,18 +1,24 @@
 #pragma once
-#include "CommonMath.h"
-#include "LightScatteringExport.h"
-#include "LightScatteringPostProcess.h"
+#include <boost/thread/thread.hpp>
+#include "AirScatteringAttribs.h"
+#include "PostProcessingAttribs.h"
 
-class LightScattering_DLL_EXPORT COutdoorLightScattering
+
+class COutdoorLightScattering
 {
 public:
+	EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
+	static COutdoorLightScattering* getInstance();
+	void  computeScatteringCoefficients();
+	void  computeInscatteringIntegral(vec3f vRayStart, vec3f vRayEnd, vec3f vEarthCentre, vec3f vDirOnLight, vec2f& voNetParticleFromCam, vec3f& voRayleighInscattering, vec3f& voMieInscattering, const float vNumSteps = 7);
+	const CAirScatteringAttribs getAirScatteringAttribs() const;
+
+
+private:
 	COutdoorLightScattering();
 	~COutdoorLightScattering();
 
-	 void  computeScatteringCoefficients();
-	 void  computeInscatteringIntegral(vec3f vRayStart, vec3f vRayEnd, vec3f vEarthCentre, vec3f vDirOnLight, vec2f& voNetParticleFromCam, vec3f& voRayleighInscattering, vec3f& voMieInscattering, const float vNumSteps = 7);
-
-private:
 	void  __computeRayleighScatteringCoefficennts();
 	void  __computeMieScatteringCoefficennts();
 	void  __computePointDiffInscattering(vec2f vPraticleDensityIncurrPoint, vec2f vNetParticleDensityFromCam, vec2f vNetParticleDesityToAtmTop, vec3f& voRlghInscatering, vec3f& voMieInscatering);
@@ -25,11 +31,7 @@ private:
 	vec2f __getNetParticleDensity(vec3f vPos, vec3f vEarthCentre, vec3f vRayDir, const bool vIsOccluded);
 	vec2f __IntegrateParticleDensityAlongRay(vec3f vPos, vec3f vRayDir,  vec3f vEarthCentre);
 	vec2f __IntegrateParticleDensity(vec3f vRayStart, vec3f vRayEnd, vec3f vEarthCenre, const float vStepsNum = 200);
-	
-	vec3f  m_CameraPosition;
-	vec3f  m_LightPosition;
-	vec3f  m_CameraLookat;
-	vec3f  m_CameraDirection;
+
 
 	CAirScatteringAttribs  m_AirScatteringAttribs;
 	CPostProcessingAttribs m_PostProcessingAttribs;

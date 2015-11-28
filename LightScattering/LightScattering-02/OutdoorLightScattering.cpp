@@ -308,3 +308,26 @@ const CAirScatteringAttribs COutdoorLightScattering::getAirScatteringAttribs() c
 {
 	return m_AirScatteringAttribs;
 }
+
+//******************************************************************
+//FUNCTION:
+void COutdoorLightScattering::render(CCameraAttribs& vViewCamera, CLightAttribs& vSunLight, CPostProcessingAttribs& vPPAttribs)
+{
+	glm::vec4 DirectionOnSun = vSunLight.getDirectionOnSun();
+	glm::mat4 CameraView = vViewCamera.getViewT();
+	glm::mat4 CameraProj = vViewCamera.getProjectionT();
+
+	glm::vec4 LightSceenPos;
+	LightSceenPos = CameraProj * CameraView * DirectionOnSun;
+	LightSceenPos = LightSceenPos / LightSceenPos.w;
+
+	vSunLight.setLightScreenPos(LightSceenPos);
+
+	if (abs(LightSceenPos.x) < 1 && abs(LightSceenPos.y) < 1)
+		vSunLight.m_bIsLightOnScreen = true;
+	else
+		vSunLight.m_bIsLightOnScreen = false;
+
+	m_PostProcessingAttribs = vPPAttribs;
+
+}

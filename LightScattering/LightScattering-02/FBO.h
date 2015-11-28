@@ -1,11 +1,15 @@
 #pragma once
+#include "struct.h"
 
 class CFBO
 {
 public:
 	CFBO();
-	~CFBO();
+	virtual ~CFBO();
 
-private:
+	virtual bool initFBO(unsigned int vWidth, unsigned int vHeight) = 0; 
+	virtual void bindForWriting() = 0;
 	
+protected:
+	void __generateTexture(GLuint& vTextureID, unsigned int vWidth, unsigned int vHeight);
 };

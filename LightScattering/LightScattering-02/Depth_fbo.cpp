@@ -1,13 +1,13 @@
-#include "shadow_map_fbo.h"
+#include "Depth_fbo.h"
 
-CShaderMapFBO::CShaderMapFBO()
+CDepthFBO::CDepthFBO()
 {
 	m_Fbo = 0;
 	m_LightDepth = 0;
 	m_CameraZ = 0;
 }
 
-CShaderMapFBO::~CShaderMapFBO()
+CDepthFBO::~CDepthFBO()
 {
 	if (m_Fbo != 0) {
 		glDeleteFramebuffers(1, &m_Fbo);
@@ -20,24 +20,8 @@ CShaderMapFBO::~CShaderMapFBO()
 
 //******************************************************************
 //FUNCTION:
-bool CShaderMapFBO::initFBO(unsigned int vWidth, unsigned int vHeight)
+bool CDepthFBO::initFBO(unsigned int vWidth, unsigned int vHeight)
 {
-// 	glGenTextures(1, &m_ShadowMap);
-// 	glBindTexture(GL_TEXTURE_2D, m_ShadowMap);
-// 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, vWidth, vHeight, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-//
-// 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-// 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-// 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-// 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-// 
-// 	glGenFramebuffers(1, &m_Fbo);
-// 	glBindFramebuffer(GL_FRAMEBUFFER, m_Fbo);
-// 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_ShadowMap, 0);
-// 
-// 	glDrawBuffer(GL_NONE);
-// 	glReadBuffer(GL_NONE);
-
 	glGenRenderbuffers(1, &m_DepthRenderBuffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, m_DepthRenderBuffer);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, vWidth, vHeight);
@@ -65,14 +49,16 @@ bool CShaderMapFBO::initFBO(unsigned int vWidth, unsigned int vHeight)
 
 //******************************************************************
 //FUNCTION:
-void CShaderMapFBO::bindForWriting()
+void CDepthFBO::bindForReadingLightDepth(GLenum vTextureUnit)
 {
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_Fbo);
+	glEnable(GL_TEXTURE_2D);
+	glActiveTexture(vTextureUnit);
+	glBindTexture(GL_TEXTURE_2D, m_LightDepth);
 }
 
 //******************************************************************
 //FUNCTION:
-void CShaderMapFBO::bindForReading(GLenum vTextureUnit)
+void CDepthFBO::bindForReadingCameraZ(GLenum vTextureUnit)
 {
 	glEnable(GL_TEXTURE_2D);
 	glActiveTexture(vTextureUnit);
@@ -81,18 +67,7 @@ void CShaderMapFBO::bindForReading(GLenum vTextureUnit)
 
 //******************************************************************
 //FUNCTION:
-void CShaderMapFBO::__generateTexture(GLuint& vTextureID, unsigned int vWidth, unsigned int vHeight)
+void CDepthFBO::bindForWriting()
 {
-	glGenTextures(1, &vTextureID);
-	glBindTexture(GL_TEXTURE_2D, vTextureID);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, vWidth, vHeight, 0, GL_RGBA, GL_FLOAT, NULL);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-}
-
-void CShaderMapFBO::getTextureID() const
-{
-
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_Fbo);
 }

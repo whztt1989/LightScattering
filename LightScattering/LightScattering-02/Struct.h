@@ -6,6 +6,45 @@
 #include <gl/glut.h>
 #include <glm/glm.hpp>
 
+const unsigned int WINDOW_WIDTH = 800;
+const unsigned int WINDOW_HEIGHT = 800;
+
+// struct SCameraAttribs
+// {
+// 	glm::vec4 m_f4CameraPos;
+// 	glm::mat4 m_ViewT;
+// 	glm::mat4 m_ProjectionT;
+// 	glm::mat4 m_ViewProjT;
+// };
+// 
+// struct SLightAttribs
+// {
+// 	glm::vec4 m_f4DirectionOnSun;
+// 	glm::vec4 m_f4SunColorAndIntensityAtGround;
+// 	glm::vec4 m_f4AmbientColor;
+// 	glm::vec4 m_f4LightScreenPos;
+// 
+// 	bool m_bIsLightOnScreen;
+// };
+// 
+// struct SPostProcessingAttribs
+// {
+// 	unsigned int m_NumEpipolarSlices;
+// 	unsigned int m_MaxSamplesInSlice;
+// 	unsigned int m_InitialSampleStepInSlice;
+// 	unsigned int m_EpipolarSamplingDensityFactor;
+// 
+// 	glm::vec2 m_f2CoordinateTexDim;
+// 	glm::vec2 m_f2ScreenResolution;
+// 
+// 	SPostProcessingAttribs()
+// 	{
+// 		m_f2CoordinateTexDim = glm::vec2(m_MaxSamplesInSlice, m_NumEpipolarSlices);
+// 		m_f2ScreenResolution = glm::vec2(WINDOW_WIDTH, WINDOW_HEIGHT);
+// 	}
+// };
+
+
 #define PI 3.14159265358979323846
 
 #ifndef EARTH_RADIUS

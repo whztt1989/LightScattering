@@ -9,24 +9,17 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Shaders">
       <UniqueIdentifier>{62d362bf-e2df-4400-9ab8-389bf522e04d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Attribs">
+      <UniqueIdentifier>{ca05d84d-06e2-4941-bc07-88570c0f052e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FBO">
+      <UniqueIdentifier>{f80132f1-82d1-4df8-b94c-5723bf13aa23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AirScatteringAttribs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraAttribs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FBO.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="LightScatteringPostProcess.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -48,27 +41,33 @@
     <ClCompile Include="Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="shadow_map_fbo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UBO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Depth_fbo.cpp">
+      <Filter>FBO</Filter>
+    </ClCompile>
+    <ClCompile Include="fbo.cpp">
+      <Filter>FBO</Filter>
+    </ClCompile>
+    <ClCompile Include="Coordinate_texture_fbo.cpp">
+      <Filter>FBO</Filter>
+    </ClCompile>
+    <ClCompile Include="AirScatteringAttribs.cpp">
+      <Filter>Attribs</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraAttribs.cpp">
+      <Filter>Attribs</Filter>
+    </ClCompile>
+    <ClCompile Include="LightAttribs.cpp">
+      <Filter>Attribs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AirScatteringAttribs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraAttribs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CommonMath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FBO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Light.h">
@@ -92,9 +91,6 @@
     <ClInclude Include="Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="shadow_map_fbo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Struct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -110,25 +106,51 @@
     <ClInclude Include="VBO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CameraAttribs.h">
+      <Filter>Attribs</Filter>
+    </ClInclude>
+    <ClInclude Include="AirScatteringAttribs.h">
+      <Filter>Attribs</Filter>
+    </ClInclude>
+    <ClInclude Include="LightAttribs.h">
+      <Filter>Attribs</Filter>
+    </ClInclude>
+    <ClInclude Include="fbo.h">
+      <Filter>FBO</Filter>
+    </ClInclude>
+    <ClInclude Include="Coordinate_texture_fbo.h">
+      <Filter>FBO</Filter>
+    </ClInclude>
+    <ClInclude Include="Depth_fbo.h">
+      <Filter>FBO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\0fragment.glsl">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Shaders\0fragOutdoorlightScattering.glsl">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Shaders\0vertex.glsl">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Shaders\0vertOutdoorlightScattering.glsl">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="Shaders\1fragrender.glsl">
       <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\1vertrender.glsl">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Shaders\0fragLightAndCameraDepth.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\0vertLightAndCameraDepth.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\2vertOutdoorlightScattering.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\2fragOutdoorlightScattering.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Shaders\1fragRenderCoordinateTexture..txt">
+      <Filter>Shaders</Filter>
+    </Text>
+    <Text Include="Shaders\1vertRenderCoordinateTexture.txt">
+      <Filter>Shaders</Filter>
+    </Text>
   </ItemGroup>
 </Project>

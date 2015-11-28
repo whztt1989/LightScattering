@@ -55,4 +55,4 @@ struct SSpotLight : public SPointLight
 		m_Direction = glm::vec3(0.0, 0.0, 0.0);
 		m_Cutoff = 0.0; 
 	}
-};
+};	

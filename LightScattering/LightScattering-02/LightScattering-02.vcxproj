@@ -71,18 +71,25 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(BOOST);$(OPENGL)\include;$(GLM);$(IMAGEMAGICK)\include;$(ASSIMP)\include;</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(OPENGL)\lib;$(IMAGEMAGICK)\lib;$(ASSIMP)\lib;$(BOOST)/x86;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CORE_DB_Magick++_.lib;glew32.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AirScatteringAttribs.cpp" />
     <ClCompile Include="CameraAttribs.cpp" />
-    <ClCompile Include="FBO.cpp" />
+    <ClCompile Include="Coordinate_texture_fbo.cpp" />
+    <ClCompile Include="fbo.cpp" />
+    <ClCompile Include="LightAttribs.cpp" />
     <ClCompile Include="LightScatteringPostProcess.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -90,7 +97,7 @@
     <ClCompile Include="Pipeline.cpp" />
     <ClCompile Include="PostProcessingAttribs.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="shadow_map_fbo.cpp" />
+    <ClCompile Include="Depth_fbo.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="UBO.cpp" />
   </ItemGroup>
@@ -98,15 +105,17 @@
     <ClInclude Include="AirScatteringAttribs.h" />
     <ClInclude Include="CameraAttribs.h" />
     <ClInclude Include="CommonMath.h" />
-    <ClInclude Include="FBO.h" />
+    <ClInclude Include="Coordinate_texture_fbo.h" />
+    <ClInclude Include="fbo.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="LightAttribs.h" />
     <ClInclude Include="LightScatteringPostProcess.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="OutdoorLightScattering.h" />
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="PostProcessingAttribs.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="shadow_map_fbo.h" />
+    <ClInclude Include="Depth_fbo.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="UBO.h" />
@@ -114,12 +123,16 @@
     <ClInclude Include="VBO.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\0fragment.glsl" />
-    <None Include="Shaders\0fragOutdoorlightScattering.glsl" />
-    <None Include="Shaders\0vertex.glsl" />
-    <None Include="Shaders\0vertOutdoorlightScattering.glsl" />
+    <None Include="Shaders\0fragLightAndCameraDepth.glsl" />
+    <None Include="Shaders\2fragOutdoorlightScattering.glsl" />
+    <None Include="Shaders\0vertLightAndCameraDepth.glsl" />
+    <None Include="Shaders\2vertOutdoorlightScattering.glsl" />
     <None Include="Shaders\1fragrender.glsl" />
     <None Include="Shaders\1vertrender.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Shaders\1fragRenderCoordinateTexture..txt" />
+    <Text Include="Shaders\1vertRenderCoordinateTexture.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

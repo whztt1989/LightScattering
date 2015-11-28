@@ -2,6 +2,8 @@
 #include <boost/thread/thread.hpp>
 #include "AirScatteringAttribs.h"
 #include "PostProcessingAttribs.h"
+#include "CameraAttribs.h"
+#include "LightAttribs.h"
 
 class COutdoorLightScattering
 {
@@ -10,7 +12,8 @@ public:
 	void  computeScatteringCoefficients();
 	void  computeInscatteringIntegral(glm::vec3 vRayStart, glm::vec3 vRayEnd, glm::vec3 vEarthCentre, glm::vec3 vDirOnLight, glm::vec2& voNetParticleFromCam, glm::vec3& voRayleighInscattering, glm::vec3& voMieInscattering, const float vNumSteps = 7);
 	const CAirScatteringAttribs getAirScatteringAttribs() const;
-
+	
+	void render(CCameraAttribs& vViewCamera, CLightAttribs& vSunLight, CPostProcessingAttribs& vPPAttribs);
 
 private:
 	COutdoorLightScattering();
